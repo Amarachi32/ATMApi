@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ATMApp.Domain.Entities
 {
-    public class Transaction : BaseEntity
+    public class Transaction
     {
         public int TransactionId { get; set; }
 

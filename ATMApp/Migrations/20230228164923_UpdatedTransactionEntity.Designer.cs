@@ -4,6 +4,7 @@ using ATMApp.Domain.DataBase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ATMApp.Migrations
 {
     [DbContext(typeof(AtmDbContext))]
-    partial class AtmDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230228164923_UpdatedTransactionEntity")]
+    partial class UpdatedTransactionEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,7 +77,7 @@ namespace ATMApp.Migrations
                     b.Property<int>("TransactionType")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserAccountId")
+                    b.Property<int>("UserAccountId")
                         .HasColumnType("int");
 
                     b.HasKey("TransactionId");
@@ -134,9 +136,13 @@ namespace ATMApp.Migrations
 
             modelBuilder.Entity("ATMApp.Domain.Entities.Transaction", b =>
                 {
-                    b.HasOne("ATMApp.Domain.Entities.UserAccount", null)
+                    b.HasOne("ATMApp.Domain.Entities.UserAccount", "UserAccount")
                         .WithMany("Transactions")
-                        .HasForeignKey("UserAccountId");
+                        .HasForeignKey("UserAccountId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserAccount");
                 });
 
             modelBuilder.Entity("ATMApp.Domain.Entities.UserAccount", b =>
