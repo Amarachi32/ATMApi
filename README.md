@@ -7,7 +7,7 @@ It includes functionality for user login, deposit, withdrawal, and transaction h
 ## Requirements
  + Visual Studio 2019 or later
  + .NET Core 3.1 or later
- + SQL Server or other supported database
+ + SQL Server
 
  ## Getting Started
  To get started, clone the repository to your local machine and open the solution in Visual Studio.
@@ -36,14 +36,14 @@ To perform an operation, simply select the corresponding menu option and follow 
 ## Code Overview
 The application is built using Entity Framework Core and C#. The main classes are:
 
-`MyDbContext`: The DbContext class that represents the database and provides 
+`AtmDbContext`: The DbContext class that represents the database and provides 
    access to the `User` and `Transaction` entities.
    
-`User`: The entity that represents a user in the database. It has properties for the user's ID, username, and password.
+`UserAccount`: The entity that represents a user in the database. It has properties for the user's ID, username, and password.
 
 `Transaction`: The entity that represents a transaction in the database. It has properties for the transaction's ID, user ID, type (deposit or withdrawal), amount, and date.
 
-`Program`: The main program class that handles user input and output.
+`Entry`: The main program class that handles user input and output.
 
 The application uses Entity Framework Core to interact with the database. When the user performs an operation, the application retrieves the necessary data from the database,
 performs the operation, and saves the changes back to the database.
@@ -58,5 +58,6 @@ for your own ATM application or as a learning resource to help you understand En
 * **Project Type**: Console
 * **IDE**: Visual Studio (Version 2022)
 * **Paradigm or pattern of programming**: Object-Oriented Programming (OOP)
+* **DataBase**:Sql Server
 * **Data**:Entity Framework
 
