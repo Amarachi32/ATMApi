@@ -298,7 +298,7 @@ namespace ATMApp
                                     context.SaveChanges();
                                 }*/
 
-                //atmCon.SaveChanges();
+                atmCon.SaveChanges();
             }
         }
 
@@ -335,10 +335,13 @@ namespace ATMApp
             Console.WriteLine(transaction);
 
             //await atmCon._listOfTransactions.AddRangeAsync(transaction);
-             atmCon.Transactions.Add(transaction);
-             atmCon.SaveChanges();
+
             //add transaction object to the list
-            // _listOfTransactions.Add(transaction);
+            _listOfTransactions.Add(transaction);
+            atmCon.Transactions.Add(transaction);
+             atmCon.SaveChanges();
+    
+            
         }
         public void ViewTransaction()
 
@@ -350,18 +353,13 @@ namespace ATMApp
                     .OrderByDescending(t => t.TransactionDate)
                     .ToList();
 
-
-/*                foreach (var transaction in transactions)
-                {
-                    Console.WriteLine("{0}\t{1}\t{2:C}\t{3}", transaction.TransactionDate, transaction.TransactionType, transaction.TransactionAmount);
-                }*/
                 //check if there's a transaction
-/*                if (transactions.Count <= 0)
+                if (transactions.Count <= 0)
                 {
                     Utility.PrintMessage("You have no transaction yet.", true);
                 }
                 else
-                {*/
+                {
                     var table = new ConsoleTable("Id", "Transaction Date", "Type", "Descriptions", "Amount " + AppScreen.cur);
                     foreach (var tran in transactions)
                     {
@@ -371,37 +369,12 @@ namespace ATMApp
                     table.Write();
                     context.SaveChanges();
                 Utility.PrintMessage($"You have {transactions.Count} transaction(s)", true);
-                //}
+                }
                 
             }
 
-
-
-            //DataTable users = new DataTable();
-           // var filteredTransactionList = _listOfTransactions.Where(t => t.UserAccountId == inputAccount.UserAccountId).ToList();
-
         }
-        /*  public void ViewTransaction()
-          {
-              var filteredTransactionList = _listOfTransactions.Where(t => t.UserBankAccountId == selectedAccount.Id).ToList();
-              //check if there's a transaction
-              if(filteredTransactionList.Count <= 0)
-              {
-                  Utility.PrintMessage("You have no transaction yet.", true);
-              }
-             else
-              {
-                 // var table = new ConsoleTable("Id", "Transaction Date", "Type", "Descriptions", "Amount " + AppScreen.cur);
-                  var table = new ConsoleTable("Id", "Transaction Date", "Type", "Descriptions", "Amount " + AppScreen.cur);
-                  foreach(var tran in filteredTransactionList)
-                  {
-                      table.AddRow(tran.TransactionId, tran.TransactionDate, tran.TransactionType, tran.Descriprion, tran.TransactionAmount);
-                  }
-                  table.Options.EnableCount = false;
-                  table.Write();
-                  Utility.PrintMessage($"You have {filteredTransactionList.Count} transaction(s)", true);
-              }           
-          }*/
+
         private void ProcessInternalTransfer(InternalTransfer internalTransfer)
         {
             var atmCon = atmBuild.CreateDbContext(null);
