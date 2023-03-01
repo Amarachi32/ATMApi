@@ -18,6 +18,7 @@ It includes functionality for user login, deposit, withdrawal, and transaction h
  You can use the following credentials to log in:
    + CardNumber: 321321/ 654654 / 987987
    + CardPin: 123123/    456456 / 789789
+   
    **other detail**
    +Account Number:  123456 / 456789 / 123555
 
