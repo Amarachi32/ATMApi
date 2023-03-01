@@ -39,7 +39,7 @@ The application is built using Entity Framework Core and C#. The main classes ar
 `AtmDbContext`: The DbContext class that represents the database and provides 
    access to the `User` and `Transaction` entities.
    
-`UserAccount`: The entity that represents a user in the database. It has properties for the user's ID, username, and password.
+`UserAccount`: The entity that represents a user in the database. It has properties for the user's ID, cardnumber, cardpin, accountnumber etc.
 
 `Transaction`: The entity that represents a transaction in the database. It has properties for the transaction's ID, user ID, type (deposit or withdrawal), amount, and date.
 
