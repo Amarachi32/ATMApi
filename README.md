@@ -20,7 +20,7 @@ It includes functionality for user login, deposit, withdrawal, and transaction h
    + CardPin: 123123/    456456 / 789789
    
    **other detail**
-   +Account Number:  123456 / 456789 / 123555
+   + Account Number:  123456 / 456789 / 123555
 
    After logging in, you will be presented with a menu of options:
    1. View Balance
