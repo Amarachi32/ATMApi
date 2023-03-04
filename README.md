@@ -16,11 +16,13 @@ It includes functionality for user login, deposit, withdrawal, and transaction h
 
  When you run the application, you will be prompted to log in with a cardnumber and cardpin.
  You can use the following credentials to log in:
-   + CardNumber: 321321/ 654654 / 987987
-   + CardPin: 123123/    456456 / 789789
+ |  CardNumber     | CardPin |  | AccountNumber |
+| ----------- | ----------- |  ----------- |
+|  321321  | 123123      |  123456      |
+| 654654   | 456456      | 456789      |
+| 987987   | 789789      | 123555      |
+
    
-   **other detail**
-   + Account Number:  123456 / 456789 / 123555
 
    After logging in, you will be presented with a menu of options:
    1. View Balance
