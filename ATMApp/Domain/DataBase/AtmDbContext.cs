@@ -5,6 +5,7 @@ namespace ATMApp.Domain.DataBase
 {
     public class AtmDbContext : DbContext
     {
+
         public AtmDbContext(DbContextOptions<AtmDbContext> options) : base(options)
         {
 

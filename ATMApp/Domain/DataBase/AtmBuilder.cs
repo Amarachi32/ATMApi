@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+//using Microsoft.Extensions.Configuration;
+using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +14,10 @@ namespace ATMApp.Domain.DataBase
     {
         public AtmBuilder() { 
         }
-
-        // AtmDbContext IDesignTimeDbContextFactory<AtmDbContext>.CreateDbContext(string[] args)
         public AtmDbContext CreateDbContext(string[] args)
         {
            var optionBuilder = new DbContextOptionsBuilder<AtmDbContext>();
-            string connectionString = @"Data Source=DESKTOP-J5V3R18\SQLEXPRESS;Initial Catalog=AtmDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            string connectionString = ConfigurationManager.AppSettings["DatabaseConnectionString"];
             optionBuilder.UseSqlServer(connectionString);
             return new AtmDbContext(optionBuilder.Options);
         }

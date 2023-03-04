@@ -80,12 +80,13 @@ namespace ATMApp.UI
             return Console.ReadLine();
         }
 
-        public static void PrintDotAnimation(int timer = 10)
+        public static async void PrintDotAnimation(int timer = 10)
         {
             for (int i = 0; i < timer; i++)
             {
                 Console.Write(".");
                 Thread.Sleep(200);
+                //await Task.Delay(2000);
             }
             Console.Clear();
         }

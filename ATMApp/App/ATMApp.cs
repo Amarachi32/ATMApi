@@ -15,8 +15,8 @@ namespace ATMApp
 {
     public class ATMApp : IUserLogin, IUserAccountActions, ITransaction
     {
+
         private List<UserAccount> userAccountList;
-        private UserAccount selectedAccount;
         private List<Transaction> _listOfTransactions;
         private const decimal minimumKeptAmount = 500;
         private readonly AppScreen screen;
@@ -31,11 +31,9 @@ namespace ATMApp
         public void Run()
         {
             var atmCon = atmBuild.CreateDbContext(null);
-            var anyUser = atmCon.Users;
             AppScreen.Welcome();
             CheckUserCardNumAndPassword();
-            //var singleUser = atmCon.Users.Where(u => u.FullName)
-            //AppScreen.WelcomeCustomer(singleUser);
+            AppScreen.WelcomeCustomer(inputAccount.FullName);
             while (true)
             {
                 AppScreen.DisplayAppMenu();
@@ -70,11 +68,10 @@ namespace ATMApp
             {
                 inputAccount = AppScreen.UserLoginForm();
                 AppScreen.LoginProgress();
-                // var allUsers = atmCon.Users.ToList();
                 using (var context = atmBuild.CreateDbContext(null))
                 {
-                    var user = context.Users.FirstOrDefault(u => u.CardNumber == inputAccount.CardNumber && u.CardPin == inputAccount.CardPin);
-                    if (user != null)
+                    inputAccount = context.Users.FirstOrDefault(u => u.CardNumber == inputAccount.CardNumber && u.CardPin == inputAccount.CardPin);
+                    if (inputAccount != null)
                     {
                         inputAccount.TotalLogin++;
                         // User authenticated
@@ -103,42 +100,7 @@ namespace ATMApp
                 }
                 Console.Clear();
 
-                //comment
-                /*foreach (UserAccount account in userAccountList)
-                {
-                    selectedAccount = account;
-                    if (inputAccount.CardNumber.Equals(selectedAccount.CardNumber))
-                    {
-                        selectedAccount.TotalLogin++;
 
-                        if (inputAccount.CardPin.Equals(selectedAccount.CardPin))
-                        {
-                            selectedAccount = account;
-
-                            if (selectedAccount.IsLocked || selectedAccount.TotalLogin > 3)
-                            {
-                                AppScreen.PrintLockScreen();
-                            }
-                            else
-                            {
-                                selectedAccount.TotalLogin = 0;
-                                isCorrectLogin = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (isCorrectLogin == false)
-                    {
-                        Utility.PrintMessage("\nInvalid card number or PIN.", false);
-                        selectedAccount.IsLocked = selectedAccount.TotalLogin == 3;
-                        if (selectedAccount.IsLocked)
-                        {
-                            AppScreen.PrintLockScreen();
-                        }
-                    }
-                    Console.Clear();
-                }*/
             }
         }
 
@@ -220,7 +182,7 @@ namespace ATMApp
                 }
 
                 //bind transaction details to transaction object
-                InsertTransaction( TransactionType.Deposit, transaction_amt, "");
+                InsertTransaction(inputAccount.UserAccountId, TransactionType.Deposit, transaction_amt, "");
 
                 //update account balance
                 account.AccountBalance += transaction_amt;
@@ -283,20 +245,14 @@ namespace ATMApp
                         $"minimum {Utility.FormatAmount(minimumKeptAmount)}", false);
                     return;
                 }
-                
+
                 //Bind withdrawal details to transaction object
-                InsertTransaction( TransactionType.Withdrawal, transaction_amt, "Paid");
+                InsertTransaction(inputAccount.UserAccountId, TransactionType.Withdrawal, transaction_amt, "Paid");
                 //update account balance
                 account.AccountBalance -= transaction_amt;
                 //success message
                 Utility.PrintMessage($"You have successfully withdrawn " +
                     $"{Utility.FormatAmount(transaction_amt)}.", true);
-
-                /*                if (account.Balance >= 100)
-                                {
-                                    account.Balance -= 100;
-                                    context.SaveChanges();
-                                }*/
 
                 atmCon.SaveChanges();
             }
@@ -318,59 +274,59 @@ namespace ATMApp
 
         }
 
-        public void InsertTransaction( TransactionType _tranType, decimal _tranAmount, string _desc)
+        public async Task InsertTransaction(int _UserBankAccountId, TransactionType _tranType, decimal _tranAmount, string _desc)
         {
             var atmCon = atmBuild.CreateDbContext(null);
 
             //create a new transaction object
             var transaction = new Transaction()
             {
-              //  TransactionId = Utility.GetTransactionId(),
-               // UserAccountId = _UserBankAccountId,
+                UserAccountId = _UserBankAccountId,
                 TransactionDate = DateTime.Now,
                 TransactionType = _tranType,
                 TransactionAmount = _tranAmount,
                 Descriprion = _desc
             };
-            Console.WriteLine(transaction);
 
-            //await atmCon._listOfTransactions.AddRangeAsync(transaction);
 
             //add transaction object to the list
             _listOfTransactions.Add(transaction);
-            atmCon.Transactions.Add(transaction);
-             atmCon.SaveChanges();
-    
-            
+            await atmCon.Transactions.AddAsync(transaction);
+            await atmCon.SaveChangesAsync();
+
+
         }
         public void ViewTransaction()
 
         {
             using (var context = atmBuild.CreateDbContext(null))
             {
-                var transactions = context.Transactions
-                    .Where(t => t.TransactionId == inputAccount.UserAccountId)
-                    .OrderByDescending(t => t.TransactionDate)
-                    .ToList();
 
-                //check if there's a transaction
-                if (transactions.Count <= 0)
+                var user = context.Users.FirstOrDefault(u => u.UserAccountId == inputAccount.UserAccountId);
+                if (user != null)
                 {
-                    Utility.PrintMessage("You have no transaction yet.", true);
-                }
-                else
-                {
-                    var table = new ConsoleTable("Id", "Transaction Date", "Type", "Descriptions", "Amount " + AppScreen.cur);
-                    foreach (var tran in transactions)
+                    var transactions = context.Transactions
+                        .Where(t => t.UserAccountId == inputAccount.UserAccountId)
+                        .OrderByDescending(t => t.TransactionDate)
+                        .ToList();
+                    if (transactions.Count <= 0)
                     {
-                        table.AddRow(tran.TransactionId, tran.TransactionDate, tran.TransactionType, tran.Descriprion, tran.TransactionAmount);
+                        Utility.PrintMessage("You have no transaction yet.", true);
                     }
-                    table.Options.EnableCount = true;
-                    table.Write();
-                    context.SaveChanges();
-                Utility.PrintMessage($"You have {transactions.Count} transaction(s)", true);
+                    else
+                    {
+                        var table = new ConsoleTable("Id", "Transaction Date", "Type", "Descriptions", "Amount " + AppScreen.cur);
+                        foreach (var tran in transactions)
+                        {
+                            table.AddRow(tran.TransactionId, tran.TransactionDate, tran.TransactionType, tran.Descriprion, tran.TransactionAmount);
+                        }
+                        table.Options.EnableCount = true;
+                        table.Write();
+                        context.SaveChanges();
+                        Utility.PrintMessage($"You have {transactions.Count} transaction(s)", true);
+                    }
+
                 }
-                
             }
 
         }
@@ -382,17 +338,6 @@ namespace ATMApp
             var destinationAccount = atmCon.Users.FirstOrDefault(a => a.AccountNumber == internalTransfer.ReciepeintBankAccountNumber);
             if (sourceAccount != null && destinationAccount != null)
             {
-                /*                if (sourceAccount.AccountBalance >= 100)
-                                {
-                                    sourceAccount.AccountBalance -= 100;
-                                    destinationAccount.AccountBalance += 100;
-                                    atmCon.SaveChanges();
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Insufficient balance");
-                                }*/
-
                 if (internalTransfer.TransferAmount <= 0)
                 {
                     Utility.PrintMessage("Amount needs to be more than zero. Try again.", false);
@@ -414,9 +359,6 @@ namespace ATMApp
                 }
 
                 //check reciever's account number is valid
-/*                var selectedBankAccountReciever = (from userAcc in userAccountList
-                                                   where userAcc.AccountNumber == internalTransfer.ReciepeintBankAccountNumber
-                                                   select userAcc).FirstOrDefault();*/
                 if (destinationAccount == null)
                 {
                     Utility.PrintMessage("Transfer failed. Recieber bank account number is invalid.", false);
@@ -430,13 +372,13 @@ namespace ATMApp
                 }
 
                 //add transaction to transactions record- sender
-                InsertTransaction( TransactionType.Transfer, internalTransfer.TransferAmount, "Transfered " +
+                InsertTransaction(inputAccount.UserAccountId, TransactionType.Transfer, internalTransfer.TransferAmount, "Transfered " +
                     $"to {destinationAccount.AccountNumber} ({destinationAccount.FullName})");
                 //update sender's account balance
                 sourceAccount.AccountBalance -= internalTransfer.TransferAmount;
 
                 //add transaction record-reciever
-                InsertTransaction( TransactionType.Transfer, internalTransfer.TransferAmount, "Transfered from " +
+                InsertTransaction(inputAccount.UserAccountId, TransactionType.Transfer, internalTransfer.TransferAmount, "Transfered from " +
                     $"{destinationAccount.AccountNumber}({destinationAccount.FullName})");
                 //update reciever's account balance
                 destinationAccount.AccountBalance += internalTransfer.TransferAmount;

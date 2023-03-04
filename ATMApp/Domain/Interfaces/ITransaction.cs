@@ -1,4 +1,5 @@
 ﻿
+using ATMApp.Domain.Entities;
 using ATMApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace ATMApp.Domain.Interfaces
 {
     public interface ITransaction
     {
-         void InsertTransaction( TransactionType _tranType, decimal _tranAmount, string _desc);
+         Task InsertTransaction(int _UserBankAccountId, TransactionType _tranType, decimal _tranAmount, string _desc);
         void ViewTransaction();
     }
 }
