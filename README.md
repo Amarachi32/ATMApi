@@ -21,11 +21,7 @@ It includes functionality for user login, deposit, withdrawal, and transaction h
 |   |   |   |   |   |
 |   |   |   |   |   |
 |   |   |   |   |   |
- | CardNumber  | CardPin  |  AccountNumber | 
-|---|---|---|---|---|
-|   |   |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
+
  |  CardNumber     | CardPin | AccountNumber |
 | -------- | ----------- |  ----------- |
 |  321321  | 123123      |  123456      |
