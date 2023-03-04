@@ -16,11 +16,7 @@ It includes functionality for user login, deposit, withdrawal, and transaction h
 
  When you run the application, you will be prompted to log in with a cardnumber and cardpin.
  You can use the following credentials to log in:
- |   CardNumber | CardPin  |   AccountNumber |   |   |
-|---|---|---|---|---|
-|   |   |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
+
 
  |  CardNumber     | CardPin | AccountNumber |
 | -------- | ----------- |  ----------- |
