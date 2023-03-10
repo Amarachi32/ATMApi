@@ -12,6 +12,7 @@ namespace ATMApp.Domain.DataBase
 {
     public class AtmBuilder : IDesignTimeDbContextFactory<AtmDbContext>
     {
+
         public AtmBuilder() { 
         }
         public AtmDbContext CreateDbContext(string[] args)
