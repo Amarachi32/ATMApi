@@ -34,8 +34,6 @@ namespace ATMApp
             var anyUser = atmCon.Users;
             AppScreen.Welcome();
             CheckUserCardNumAndPassword();
-            //var singleUser = atmCon.Users.Where(u => u.FullName)
-            //AppScreen.WelcomeCustomer(singleUser);
             while (true)
             {
                 AppScreen.DisplayAppMenu();
@@ -70,7 +68,6 @@ namespace ATMApp
             {
                 inputAccount = AppScreen.UserLoginForm();
                 AppScreen.LoginProgress();
-                // var allUsers = atmCon.Users.ToList();
                 using (var context = atmBuild.CreateDbContext(null))
                 {
                     var user = context.Users.FirstOrDefault(u => u.CardNumber == inputAccount.CardNumber && u.CardPin == inputAccount.CardPin);
@@ -103,42 +100,7 @@ namespace ATMApp
                 }
                 Console.Clear();
 
-                //comment
-                /*foreach (UserAccount account in userAccountList)
-                {
-                    selectedAccount = account;
-                    if (inputAccount.CardNumber.Equals(selectedAccount.CardNumber))
-                    {
-                        selectedAccount.TotalLogin++;
-
-                        if (inputAccount.CardPin.Equals(selectedAccount.CardPin))
-                        {
-                            selectedAccount = account;
-
-                            if (selectedAccount.IsLocked || selectedAccount.TotalLogin > 3)
-                            {
-                                AppScreen.PrintLockScreen();
-                            }
-                            else
-                            {
-                                selectedAccount.TotalLogin = 0;
-                                isCorrectLogin = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (isCorrectLogin == false)
-                    {
-                        Utility.PrintMessage("\nInvalid card number or PIN.", false);
-                        selectedAccount.IsLocked = selectedAccount.TotalLogin == 3;
-                        if (selectedAccount.IsLocked)
-                        {
-                            AppScreen.PrintLockScreen();
-                        }
-                    }
-                    Console.Clear();
-                }*/
+              
             }
         }
 

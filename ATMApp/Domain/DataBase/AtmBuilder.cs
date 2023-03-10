@@ -12,8 +12,6 @@ namespace ATMApp.Domain.DataBase
     {
         public AtmBuilder() { 
         }
-
-        // AtmDbContext IDesignTimeDbContextFactory<AtmDbContext>.CreateDbContext(string[] args)
         public AtmDbContext CreateDbContext(string[] args)
         {
            var optionBuilder = new DbContextOptionsBuilder<AtmDbContext>();

@@ -21,10 +21,6 @@ namespace ATMApp.UI
 
             //set the welcome message 
             Console.WriteLine("\n\n-----------------Welcome to My ATM App-----------------\n\n");
-            //prompt the user to insert atm card
-            Console.WriteLine("Please insert your ATM card");
-            Console.WriteLine("Note: Actual ATM machine will accept and validate" +
-                " a physical ATM card, read the card number and validate it.");
             Utility.PressEnterToContinue();
         }
 

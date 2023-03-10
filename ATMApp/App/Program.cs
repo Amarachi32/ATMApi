@@ -1,4 +1,5 @@
-﻿using ATMApp.Domain.DataBase;
+﻿
+using ATMApp.Domain.DataBase;
 using ATMApp.UI;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ATMApp.App
 {
-    class Entry
+    class Program
     {
         static void Main(string[] args)
         {
