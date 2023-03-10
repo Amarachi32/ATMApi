@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ATMApp.Domain.Entities
 {
@@ -21,6 +17,6 @@ namespace ATMApp.Domain.Entities
         public bool IsLocked { get; set; }
 
         // navigation property
-       public virtual ICollection<Transaction> Transactions { get; set; }
+        public virtual ICollection<Transaction> Transactions { get; set; }
     }
 }

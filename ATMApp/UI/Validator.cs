@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace ATMApp.UI
 {
@@ -21,7 +16,7 @@ namespace ATMApp.UI
                 try
                 {
                     var converter = TypeDescriptor.GetConverter(typeof(T));
-                    if(converter != null)
+                    if (converter != null)
                     {
                         return (T)converter.ConvertFromString(userInput);
                     }

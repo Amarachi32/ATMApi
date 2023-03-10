@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ATMApp.UI
 {
@@ -32,7 +29,7 @@ namespace ATMApp.UI
 
                 ConsoleKeyInfo inputKey = Console.ReadKey(true);
 
-                if(inputKey.Key == ConsoleKey.Enter)
+                if (inputKey.Key == ConsoleKey.Enter)
                 {
                     if (input.Length == 6)
                     {
@@ -40,11 +37,11 @@ namespace ATMApp.UI
                     }
                     else
                     {
-                        PrintMessage("\nPlease enter 6 digits.", false);                        
+                        PrintMessage("\nPlease enter 6 digits.", false);
                         input.Clear();
                         isPrompt = true;
                         continue;
-                    }                   
+                    }
                 }
                 if (inputKey.Key == ConsoleKey.Backspace && input.Length > 0)
                 {

@@ -1,9 +1,5 @@
 ﻿using ATMApp.Domain.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ATMApp.UI
 {
@@ -12,21 +8,16 @@ namespace ATMApp.UI
         internal const string cur = "$";
         internal static void Welcome()
         {
-            //clears the console screen
-            Console.Clear();
-            //sets the title of the console window
-            Console.Title = "My ATM App";
-            //sets the text color or foreground color to white
-            Console.ForegroundColor = ConsoleColor.White;
 
-            //set the welcome message 
+            Console.Clear();
+            Console.Title = "My ATM App";
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n\n-----------------Welcome to My ATM App-----------------\n\n");
-            //prompt the user to insert atm card
             Console.WriteLine("Please insert your ATM card");
             Utility.PressEnterToContinue();
         }
 
-        internal static UserAccount  UserLoginForm()
+        internal static UserAccount UserLoginForm()
         {
             UserAccount tempUserAccount = new UserAccount();
 
@@ -39,7 +30,7 @@ namespace ATMApp.UI
         {
             Console.WriteLine("\nChecking card number and PIN...");
             Utility.PrintDotAnimation();
-        } 
+        }
 
         internal static void PrintLockScreen()
         {
@@ -90,35 +81,35 @@ namespace ATMApp.UI
             {
                 case 1:
                     return 500;
-                    
+
                 case 2:
                     return 1000;
-                   
+
                 case 3:
                     return 2000;
-                   
+
                 case 4:
                     return 5000;
-  
+
                 case 5:
                     return 10000;
-  
+
                 case 6:
                     return 15000;
-                    
+
                 case 7:
                     return 20000;
-                   
+
                 case 8:
-             
+
                 case 0:
                     return 0;
-                   
+
                 default:
                     Utility.PrintMessage("Invalid input. Try again.", false);
                     return -1;
-                   
-            }   
+
+            }
         }
         internal InternalTransfer InternalTransferForm()
         {

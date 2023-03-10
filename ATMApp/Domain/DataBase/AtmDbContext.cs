@@ -17,7 +17,7 @@ namespace ATMApp.Domain.DataBase
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-/*            modelBuilder.Entity<UserAccount>(e =>
+            modelBuilder.Entity<UserAccount>(e =>
                 {
                     e.Property(e => e.FullName)
                     .IsRequired()
@@ -25,10 +25,7 @@ namespace ATMApp.Domain.DataBase
                     e.HasIndex(e => new { e.FullName, e.AccountBalance },
                         $"IX_Unique_{nameof(UserAccount.FullName)} = {nameof(UserAccount.AccountBalance)}"
                     );
-                });*/
-
-
-
+                });
             base.OnModelCreating(modelBuilder);
         }
     }
